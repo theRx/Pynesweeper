@@ -53,7 +53,6 @@ def dig(x, y):  # Reveals an x, y location. If a mine, triggers the lose screen,
     global map_size_y
     global mine_array
     global map_array
-    # if x
     if y < 0 or y >= map_size_y or x < 0 or x >= map_size_x:  # Does nothing if out of range for the map
         return
     elif rev_map_array[y][x] != chr(1160):  # Does nothing if coordinate has been revealed
