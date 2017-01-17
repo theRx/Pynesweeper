@@ -8,6 +8,15 @@ Minesweeper is property of Microsoft
 import random
 
 
+def how_to_play():
+    print("Pynesweeper is a game of clearing a field of mines. The three difficulties vary on size of the field and " +
+          "number of mines,\nbut the rules stay the same. Once you've selected a difficulty and the game starts, " +
+          "you can dig up a location or mark it with a flag.\nOnce a spot is dug up, a number will indicate how " +
+          "many mines are next to the spot, with a maximum of 8. But watch out!\nIf you dig up a mine, it will be " +
+          "game over, and you'll have to start from scratch. Good luck and have fun!\n")
+    return
+
+
 def arrange_xy(old_coords):  # Arranges a list oc (x, y) coordinates into a new list by the x-value first
     new_coords = []
     for i in range(map_size_x):
@@ -256,7 +265,7 @@ def menu():  # Menu loop, takes user inupt and either exits program or starts ge
     global mine_num
     in_menu = True
     while in_menu:
-        usr_command = input("'New' game or 'Quit'\n")
+        usr_command = input("'New' game to start, 'Info' for game rules, or 'Quit' to exit\n")
         if usr_command.casefold() == "new":
             print("New game")
             diff_selection = True
@@ -291,7 +300,8 @@ def menu():  # Menu loop, takes user inupt and either exits program or starts ge
                     exit(0)
                 else:
                     print("Invalid option")
-
+        elif usr_command.casefold() == "info":
+            how_to_play()
         elif usr_command.casefold() == "quit":
             print("Quit game")
             exit(0)
