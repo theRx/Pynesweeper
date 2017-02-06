@@ -80,6 +80,29 @@ def dig(x, y):  # Reveals an x, y location. If a mine, triggers the lose screen,
                     dig(x + i, y + j)
 
 
+def reveal(x, y):
+    global reveal_array
+    print("placeholder " + str(x) + ' ' + str(y))
+    if rev_map_array[y][x] == 0:  # Does nothing if coordinate has been revealed
+        print("No neighboring mines")
+        return
+    elif rev_map_array[y][x] == chr(1160):  # Does nothing if coordinate has been revealed
+        print("Location not dug up")
+        return
+    else:
+        mines = rev_map_array[y][x]
+        print(mines)
+        if neighbor_mines(mines, x, y):
+            for each in range(len(reveal_array)):
+                i = reveal_array[each][0]  #x
+                j = reveal_array[each][1]  #y
+                print(str(i) + " " + str(j))
+                dig(i, j)
+                #rev_map_array[j][i] = hidden_map_array[j][i]
+                #map_array.remove([i, j])
+    return
+
+
 def x_check(check_num):  # Checks if a x-value is within the map
     global x_range
     for i in range(len(x_range)):
@@ -96,6 +119,26 @@ def y_check(check_num):  # Checks if a y-value is within the map
     return False
 
 
+def neighbor_mines(mines, x, y):
+    global reveal_array
+    reveal_array.clear()
+    print("Neighbor to check " + str(mines))
+    mine_count = 0
+    for i in range(-1, 2):
+        for j in range(-1, 2):
+            if y < 0 or y >= map_size_y or x < 0 or x >= map_size_x:
+                pass
+            elif rev_map_array[y + j][x + i] == 'P':
+                mine_count += 1
+            else:
+                if rev_map_array[y + j][x + i] == chr(1160):
+                    reveal_array.append([x + i, y + j])
+    if mine_count == rev_map_array[y][x]:
+        return True
+    else:
+        return False
+
+
 def player_turn():  # Main gameplay loop.
     # print("There's gonna be a loop here")
     playing = True
@@ -105,7 +148,7 @@ def player_turn():  # Main gameplay loop.
             playing = False
             win_screen()
         else:  # Takes user input if not win
-            usr_input = input("Actions: 'Dig x y' 'Mark x y' and 'Quit'\n")
+            usr_input = input("Actions: 'Dig x y' 'Mark x y' 'Reveal x y' and 'Quit'\n")
             usr_command = [0, 0, 0]
             for i in range(len(usr_input.split())):  # Parses input to up to three objects
                 usr_command[i] = usr_input.split()[i]
@@ -121,6 +164,8 @@ def player_turn():  # Main gameplay loop.
             elif (usr_command[0].casefold() == "mark") and (x_check(usr_command[1])) and (y_check(usr_command[2])):
                 # print("mork", usr_command[1], usr_command[2])
                 mark(int(usr_command[1]) - 1, int(usr_command[2]) - 1)
+            elif (usr_command[0].casefold() == "reveal") and (x_check(usr_command[1])) and (y_check(usr_command[2])):
+                reveal(int(usr_command[1]) - 1, int(usr_command[2]) - 1)
             else:
                 print("Invalid option")
 
@@ -320,6 +365,7 @@ if __name__ == "__main__":  # Main method. Sets up global objects, displays titl
     y_range = []
     mine_array = []
     map_array = []
+    reveal_array = []
 
     print("Pynesweeper\n" +
           "Accepted commands are in single quotes, and separate X and Y with spaces\n" +
