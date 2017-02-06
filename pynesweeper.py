@@ -327,21 +327,21 @@ def menu():  # Menu loop, takes user inupt and either exits program or starts ge
                     mine_num = 10
                     diff_selection = False
                     in_menu = False
-                    map_gen()
+                    #map_gen()
                 elif usr_command.casefold() == "medium":
                     map_size_x = 16
                     map_size_y = 16
                     mine_num = 40
                     diff_selection = False
                     in_menu = False
-                    map_gen()
+                    #map_gen()
                 elif usr_command.casefold() == "hard":
                     map_size_x = 30
                     map_size_y = 16
                     mine_num = 99
                     diff_selection = False
                     in_menu = False
-                    map_gen()
+                    #map_gen()
                 elif usr_command.casefold() == "quit":
                     print("Quit game")
                     exit(0)
@@ -373,6 +373,7 @@ if __name__ == "__main__":  # Main method. Sets up global objects, displays titl
           "Accepted commands are in single quotes, and separate X and Y with spaces\n" +
           "Enter your choices")
     menu()
+    map_gen()
 
     # print("Mined and numbered map")
     # print_map2()
