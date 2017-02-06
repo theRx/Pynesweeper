@@ -11,9 +11,10 @@ import random
 def how_to_play():
     print("Pynesweeper is a game of clearing a field of mines. The three difficulties vary on size of the field and " +
           "number of mines,\nbut the rules stay the same. Once you've selected a difficulty and the game starts, " +
-          "you can dig up a location or mark it with a flag.\nOnce a spot is dug up, a number will indicate how " +
-          "many mines are next to the spot, with a maximum of 8. But watch out!\nIf you dig up a mine, it will be " +
-          "game over, and you'll have to start from scratch. Good luck and have fun!\n")
+          "you can dig up a location, mark it\nwith a flag, or reveal nearby mines once enough flags have been " +
+          "placed. Once a spot is dug up, a number will indicate how\nmany mines are next to the spot, with a " +
+          "maximum of 8. But watch out! If you dig up a mine, it will be game over, and you'll\nhave to start from " +
+          "scratch. Good luck and have fun!\n")
     return
 
 
@@ -28,6 +29,7 @@ def arrange_xy(old_coords):  # Arranges a list oc (x, y) coordinates into a new 
 
 
 def win_screen():  # Announces the player's success, and offer to restart
+    print_end_map()
     print("You Win!")
     print()
     print("Would you like to play again?")
@@ -37,6 +39,7 @@ def win_screen():  # Announces the player's success, and offer to restart
 
 
 def lose_screen():  # Announces the player's failure, and offer to restart
+    print_end_map()
     print("You Lose!")
     print()
     print("Would you like to play again?")
@@ -184,6 +187,54 @@ def print_map3():  # prints out the base rev_map_array without the extra borders
             print(rev_map_array[y][x], " ", sep='', end='')
         print()
     print(chr(166))
+
+
+def print_end_map():    # So this one will display the map with borders as the player will actually be shown
+    disp_map_array.clear()
+    first_line = [' ', ' ', 'X']
+    second_line = [' ', ' ', ' ']
+    third_line = ['Y', ' ', '+']
+    for x in range(map_size_x):
+        if x < 9:
+            first_digit = " "
+        elif x < 19:
+            first_digit = 1
+        elif x < 29:
+            first_digit = 2
+        else:
+            first_digit = 3
+        first_line.append(' ')
+        first_line.append(str(first_digit))
+        second_line.append(' ')
+        second_line.append(str((x + 1) % 10))
+        third_line.append('-')
+        third_line.append('-')
+    # print(first_line)
+    # print(second_line)
+    # print(third_line)
+    disp_map_array.append(first_line)
+    disp_map_array.append(second_line)
+    disp_map_array.append(third_line)
+    for y in range(map_size_y):  # Starts feeding in map data, readying it for display to the user
+        this_line = []
+        if y < 9:
+            first_digit = " "
+        else:
+            first_digit = 1
+        this_line.append(str(first_digit))
+        this_line.append(str((y + 1) % 10))
+        this_line.append(chr(166))
+        for x in range(map_size_x):
+            this_line.append(' ')
+            this_line.append(str(hidden_map_array[y][x]))
+        # print(this_line)
+        disp_map_array.append(this_line)
+    # for x in range(len(hidden_map_array[y])):  # wtf was I doing here
+    #     print  # mang idfk
+    for y in range(len(disp_map_array)):  # Prints out the map
+        for x in range(len(disp_map_array[y])):
+            print(disp_map_array[y][x], sep='', end='')
+        print()
 
 
 def print_map():    # So this one will display the map with borders as the player will actually be shown
