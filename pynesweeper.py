@@ -145,7 +145,7 @@ def player_turn():  # Main gameplay loop.
     while playing:
         print_map()
         if map_array == mine_array:  # Checks for win conditions
-            playing = False
+            # playing = False
             win_screen()
         else:  # Takes user input if not win
             usr_input = input("Actions: 'Dig x y' 'Mark x y' 'Reveal x y' and 'Quit'\n")
@@ -243,9 +243,11 @@ def map_gen():  # Generates the hidden and revealed maps, builds up the arrays u
     global map_size_y
     global mine_array
     global map_array
+    global reveal_array
 
     mine_array.clear()
     map_array.clear()
+    reveal_array.clear()
     print("Generating map")
     hidden_map_array = [[0 for i in range(map_size_x)] for i in range(map_size_y)]
     rev_map_array = [[0 for i in range(map_size_x)] for i in range(map_size_y)]
